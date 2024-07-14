@@ -43,3 +43,4 @@ namespace SignalR.BusinessLayer.Concrete
             _discountDal.Update(entity);
         }
     }
+}
