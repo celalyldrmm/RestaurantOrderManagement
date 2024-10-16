@@ -14,5 +14,9 @@ namespace SignalR.DataAccessLayer.Abstract
         int ProductCount();
         int ProductCountByCategoryHamburger();
         int ProductCountByCategoryDrink();
+        decimal ProductPriceAvg();
+        string ProductNameByMaxPrice();
+        string ProductNameByMinPrice();
+
     }
 }
