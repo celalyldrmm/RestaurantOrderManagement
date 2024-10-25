@@ -33,13 +33,13 @@ namespace SignalR.DataAccessLayer.EntityFramework
         public int ProductCountByCategoryDrink()
         {
             using var context = new SignalRContext();
-            return context.Products.Where(x => x.CategoryID == (context.Categories.Where(y => y.CategoryName=="Hamburger").Select(z=>z.CategoryID).FirstOrDefault())).Count();
+            return context.Products.Where(x => x.CategoryID == (context.Categories.Where(y => y.CategoryName== "İçecek").Select(z=>z.CategoryID).FirstOrDefault())).Count();
         }
             
         public int ProductCountByCategoryHamburger()
         {
             using var context = new SignalRContext();
-            return context.Products.Where(x => x.CategoryID == (context.Categories.Where(y => y.CategoryName == "İçecek").Select(z => z.CategoryID).FirstOrDefault())).Count();
+            return context.Products.Where(x => x.CategoryID == (context.Categories.Where(y => y.CategoryName == "Hamburger").Select(z => z.CategoryID).FirstOrDefault())).Count();
         }
 
         public string ProductNameByMaxPrice()
