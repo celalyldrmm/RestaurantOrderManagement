@@ -4,7 +4,7 @@ using SignalR.DataAccessLayer.Concrete;
 
 namespace SignalRApi.Hubs
 {
-    public class SignalRHub:Hub
+    public class SignalRHub : Hub
     {
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
@@ -12,8 +12,9 @@ namespace SignalRApi.Hubs
         private readonly IMoneyCaseService _moneyCaseService;
         private readonly IMenuTableService _menuTableService;
         private readonly IBookingService _bookingService;
+        private readonly INotificationService _notificationService;
 
-        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IMenuTableService menuTableService, IBookingService bookingService)
+        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IMenuTableService menuTableService, IBookingService bookingService, INotificationService notificationService)
         {
             _categoryService = categoryService;
             _productService = productService;
@@ -21,12 +22,13 @@ namespace SignalRApi.Hubs
             _moneyCaseService = moneyCaseService;
             _menuTableService = menuTableService;
             _bookingService = bookingService;
+            _notificationService = notificationService;
         }
 
         public async Task SendStatistic()
         {
             var value = _categoryService.TCategoryCount();
-            await Clients.All.SendAsync("ReceiveCategoryCount",value);
+            await Clients.All.SendAsync("ReceiveCategoryCount", value);
 
             var value2 = _productService.TProductCount();
             await Clients.All.SendAsync("ReceiveProductCount", value2);
@@ -34,17 +36,17 @@ namespace SignalRApi.Hubs
             var value3 = _categoryService.TActiveCategoryCount();
             await Clients.All.SendAsync("ReceiveActiveCategoryCount", value3);
 
-            var value4 = _categoryService.TPassiveCategoryCount();           
+            var value4 = _categoryService.TPassiveCategoryCount();
             await Clients.All.SendAsync("ReceivePassiveCategoryCount", value4);
 
-            var value5=_productService.TProductCountByCategoryHamburger();
+            var value5 = _productService.TProductCountByCategoryHamburger();
             await Clients.All.SendAsync("ReceiveTProductCountByCategoryHamburger", value5);
 
             var value6 = _productService.TProductCountByCategoryDrink();
             await Clients.All.SendAsync("ReceiveTProductCountByCategoryDrink", value6);
 
             var value7 = _productService.TProductPriceAvg();
-            await Clients.All.SendAsync("ReceiveTProductPriceAvg", value7.ToString("0.00")+ "₺");
+            await Clients.All.SendAsync("ReceiveTProductPriceAvg", value7.ToString("0.00") + "₺");
 
             var value8 = _productService.TProductNameByMaxPrice();
             await Clients.All.SendAsync("ReceiveTProductNameByMaxPrice", value8);
@@ -76,8 +78,8 @@ namespace SignalRApi.Hubs
         }
 
         public async Task SendProgress()
-        {   
-            var value =_moneyCaseService.TTotalMoneyCaseAmount();
+        {
+            var value = _moneyCaseService.TTotalMoneyCaseAmount();
             await Clients.All.SendAsync("ReciveTTotalMoneyCaseAmount", value.ToString("0.00") + "₺");
 
             var value2 = _orderService.TActiveOrderCount();
@@ -90,7 +92,15 @@ namespace SignalRApi.Hubs
         public async Task GetBookingList()
         {
             var values = _bookingService.TGetListAll();
-            await Clients.All.SendAsync("ReceiveBookingList",values);
+            await Clients.All.SendAsync("ReceiveBookingList", values);
+        }
+        public async Task SendNotification()
+        {
+            var value = _notificationService.TNotificationCountbyStatusFalse();
+            await Clients.All.SendAsync("ReciveNotificationCountbyStatusFalse", value);
+
+            var value1 = _notificationService.TGetAllNotificationByFalse();
+            await Clients.All.SendAsync("ReciveGetAllNotificationByFalse", value1);
         }
 
     }

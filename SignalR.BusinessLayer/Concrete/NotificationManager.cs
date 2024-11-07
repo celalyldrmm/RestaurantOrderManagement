@@ -17,6 +17,17 @@ namespace SignalR.BusinessLayer.Concrete
         {
             _notificationDal = notificationDal;
         }
+
+        public List<Notification> TGetAllNotificationByFalse()
+        {
+            return _notificationDal.GetAllNotificationByFalse();
+        }
+
+        public int TNotificationCountbyStatusFalse()
+        {
+            return _notificationDal.NotificationCountbyStatusFalse();
+        }
+
         void IGenericService<Notification>.TAdd(Notification entity)
         {
             _notificationDal.Add(entity);
@@ -29,17 +40,17 @@ namespace SignalR.BusinessLayer.Concrete
 
         Notification IGenericService<Notification>.TGetByID(int id)
         {
-           return _notificationDal.GetByID(id);
+            return _notificationDal.GetByID(id);
         }
 
         List<Notification> IGenericService<Notification>.TGetListAll()
         {
-          return  _notificationDal.GetListAll();
+            return _notificationDal.GetListAll();
         }
 
         void IGenericService<Notification>.TUpdate(Notification entity)
         {
-           _notificationDal.Update(entity);
+            _notificationDal.Update(entity);
         }
     }
 }
