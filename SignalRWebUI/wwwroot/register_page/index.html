@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Kullanıcı Kaydı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background">
+        <div class="form-container">
+            <form class="form-detail" action="#" method="post">
+                <h2>Yeni Kullanıcı Kaydı</h2>
+                <div class="form-row">
+                    <input type="text" name="full-name" id="full-name" class="input-text" placeholder="Adınız" required>
+                </div>
+                <div class="form-row">
+                    <input type="text" name="surname" id="surname" class="input-text" placeholder="Soyadınız" required>
+                </div>
+                <div class="form-row">
+                    <input type="text" name="username" id="username" class="input-text" placeholder="Kullanıcı Adı" required>
+                </div>
+                <div class="form-row">
+                    <input type="email" name="email" id="email" class="input-text" placeholder="Email Addressiniz" required pattern="[^@@]+@@[^@@]+.[a-zA-Z]{2,6}">
+                </div>
+                <div class="form-row">
+                    <input type="password" name="password" id="password" class="input-text" placeholder="Şifreniz" required>
+                </div>
+                <div class="form-row-last">
+                    <input type="submit" name="register" class="register" value="Kayıt Ol">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
