@@ -9,10 +9,10 @@
         <h4 class="page-title">Ürün İşlemleri</h4>
         <div class="row">
             <div class="col-md-12">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">                   
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">Ürün Güncelleme Sayafası</div>
+                            <div class="card-title">Ürün Güncelleme Sayfası</div>
                         </div>
                         <input type="hidden" asp-for="ProductID" />
                         <div class="card-body">
@@ -26,11 +26,11 @@
                                 <label for="price">Ürün Fiyatını Giriniz</label>
                                 <input type="text" class="form-control" asp-for="Price" id="price">
                             </div>
-                        </div>
+                        </div>                        
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="imageurl">Ürün Görselini Giriniz</label>
-                                <input type="text" class="form-control" asp-for="ImageUrl" id="imageurl">
+                                <label for="imagefile">Bilgisayarınızdan Görsel Yükleyin</label>
+                                <input type="file" class="form-control" name="ImageFile" id="imagefile">
                             </div>
                         </div>
                         <div class="card-body">
@@ -41,12 +41,18 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="status">Ürün Durumunu Seçiniz</label>
+                                @Html.DropDownListFor(x => x.ProductStatus, (List<SelectListItem>)ViewBag.s, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
                                 <label for="description">Ürün Açıklamasını Giriniz</label>
                                 <input type="text" class="form-control" asp-for="Description" id="description">
                             </div>
                         </div>
                         <div class="card-action">
-                            <button class="btn btn-primary">Ürünü Güncelle</button>
+                            <button type="submit" class="btn btn-primary">Ürünü Güncelle</button>
                         </div>
                     </div>
                 </form>

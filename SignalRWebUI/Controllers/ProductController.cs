@@ -5,6 +5,7 @@ using SignalRWebUI.Dtos.ProductDtos;
 using SignalRWebUI.Dtos.CategoryDtos;
 using System.Text;
 
+
 namespace SignalRWebUI.Controllers
 {
     public class ProductController : Controller
@@ -34,29 +35,47 @@ namespace SignalRWebUI.Controllers
             var responseMessage = await client.GetAsync("http://localhost:5195/api/Category");
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-            List<SelectListItem> values2 = (from x in values
-                                            select new SelectListItem
-                                            {
-                                                Text = x.CategoryName,
-                                                Value = x.CategoryID.ToString()
-                                            }).ToList();
-            ViewBag.v = values2;    
+
+            List<SelectListItem> values2 = values.Select(x => new SelectListItem
+            {
+                Text = x.CategoryName,
+                Value = x.CategoryID.ToString()
+            }).ToList();
+
+            ViewBag.v = values2;
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
+        public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto, IFormFile ImageFile)
         {
+            if (ImageFile != null && ImageFile.Length > 0)
+            {
+                var fileName = Path.GetFileName(ImageFile.FileName);
+                var filePath = Path.Combine("wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
+
+                createProductDto.ImageUrl = "/images/" + fileName;
+            }
+
             createProductDto.ProductStatus = true;
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createProductDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("http://localhost:5195/api/Product", stringContent);
+
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
+
             return View();
         }
+
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var client = _httpClientFactory.CreateClient();
@@ -69,6 +88,19 @@ namespace SignalRWebUI.Controllers
         }
         public async Task<IActionResult> UpdateProduct(int id)
         {
+            var client2 = _httpClientFactory.CreateClient();
+            var responseMessage2 = await client2.GetAsync("http://localhost:5195/api/Product");
+            var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
+            var values3 = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData2);
+            
+            List<SelectListItem> values4 = new List<SelectListItem>
+            {
+                 new SelectListItem { Text = "Aktif", Value = "true" },
+                 new SelectListItem { Text = "Pasif", Value = "false" }
+            };
+
+            ViewBag.s = values4;
+
             var client1 = _httpClientFactory.CreateClient();
             var responseMessage1 = await client1.GetAsync("http://localhost:5195/api/Category");
             var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
@@ -89,17 +121,36 @@ namespace SignalRWebUI.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto )
+        public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto, IFormFile ImageFile)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(updateProductDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("http://localhost:5195/api/Product", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
+            string imagePath = updateProductDto.ImageUrl;
+            if (ImageFile != null && ImageFile.Length > 0)
             {
-                return RedirectToAction("Index");
+                var fileName = Path.GetFileName(ImageFile.FileName);
+                var filePath = Path.Combine("wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
+
+                imagePath = "/images/" + fileName;
+                updateProductDto.ImageUrl = imagePath;
+
+                var client = _httpClientFactory.CreateClient();
+                var jsonData = JsonConvert.SerializeObject(updateProductDto);
+                StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                var responseMessage = await client.PutAsync("http://localhost:5195/api/Product", stringContent);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                return View(updateProductDto);
             }
-            return View();
+            return RedirectToAction("Index","Product");
 
         }
 
