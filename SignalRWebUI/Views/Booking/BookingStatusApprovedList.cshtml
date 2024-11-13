@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SignalR.EntityLayer.Entities.Booking>
+@{
+    ViewData["Title"] = "BookingStatusApprovedList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <h4 class="page-title">Rezervasyon İşlemleri</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Rezervasyonu Onaylananlar Listesi</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub">
+                            Rezervasyonu Onaylananlar  ile ilgili işlemleri aşağıdan görebilirsiniz.
+                        </div>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tarih</th>
+                                    <th scope="col">Adı Soyadı</th>
+                                    <th scope="col">Telefon Numarası</th>
+                                    <th scope="col">Mail Adresi</th>
+                                    <th scope="col">Kişi Sayısı</th>
+                                    <th scope="col">Rezervasyon Durumu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.Date</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Phone</td>
+                                        <td>@item.Mail</td>
+                                        <td>@item.PersonCount</td>
+                                        <td>@item.Description</td>
+                                       
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <a href="/Booking/Index/" class="btn btn-outline-primary">Tüm Rezervasyonlar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

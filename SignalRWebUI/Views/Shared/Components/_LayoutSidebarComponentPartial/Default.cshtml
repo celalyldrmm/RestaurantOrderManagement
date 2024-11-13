@@ -53,26 +53,31 @@
             <li class="nav-item">
                 <a href="/Category/Index/">
                     <i class="la la-keyboard-o"></i>
-                    <p>Kategoriler</p>                    
-                </a>
-            </li>
-            <li class="nav-item active">
-                <a href="/Product/Index/">
-                    <i class="la la-th"></i>
-                    <p>Ürünler</p>                  
+                    <p>Kategoriler</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/Booking/Index/">
+                <a href="/Product/Index/">
+                    <i class="la la-th"></i>
+                    <p>Ürünler</p>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" onclick="toggleDropdown(event)">
                     <i class="la la-bell"></i>
                     <p>Rezervasyonlar</p>
-                    <span class="badge badge-success">3</span>
+                    <span class="caret"></span>
                 </a>
+                <ul class="dropdown-menu" style="display: none; position: relative; list-style: none; padding: 0; margin: 0; background-color: #f9f9f9; border: 1px solid #ddd;">
+                    <li><a href="/Booking/Index/">Tüm Rezervasyonlar</a></li>
+                    <li><a href="/Booking/BookingStatusApprovedList/">Onaylananlar</a></li>
+                    <li><a href="/Booking/BookingStatusCancelledList/">Reddedilenler</a></li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a href="/About/Index/">
                     <i class="la la-font"></i>
-                    <p>Hakkımızda</p>                    
+                    <p>Hakkımızda</p>
                 </a>
             </li>
             <li class="nav-item">
@@ -126,3 +131,21 @@
         </ul>
     </div>
 </div>
+
+<script>
+    function toggleDropdown(event) {
+        event.preventDefault();
+        var dropdownMenu = event.currentTarget.nextElementSibling;
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+    }
+
+    // Sayfanın başka bir yerine tıklanınca dropdown'u kapatma
+    window.addEventListener("click", function (event) {
+        var dropdowns = document.querySelectorAll(".dropdown-menu");
+        dropdowns.forEach(function (dropdown) {
+            if (!event.target.closest(".nav-item.dropdown")) {
+                dropdown.style.display = "none";
+            }
+        });
+    });
+</script>
