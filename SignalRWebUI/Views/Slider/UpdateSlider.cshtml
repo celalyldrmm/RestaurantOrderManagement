@@ -1,6 +1,6 @@
-﻿@model UpdateFeatureDto
+﻿@model UpdateSliderDto
 @{
-    ViewData["Title"] = "UpdateFeature";
+    ViewData["Title"] = "UpdateSlider";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 <div class="content">
@@ -14,7 +14,7 @@
                             <div class="card-title"> Öne Çıkan Güncelleme Girişi</div>
                         </div>
                         <div class="card-body">
-                            <input type="hidden" asp-for="FeatureID" />
+                            <input type="hidden" asp-for="SliderID" />
                             <div class="form-group">
                                 <label for="Title1"> 1. Başlığı Giriniz</label>
                                 <input type="text" class="form-control" asp-for="Title1" id="Title1">
