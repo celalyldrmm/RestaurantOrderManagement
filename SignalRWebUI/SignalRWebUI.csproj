@@ -35,4 +35,10 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="QRCoder">
+      <HintPath>..\..\..\..\..\Desktop\QRCoder.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
