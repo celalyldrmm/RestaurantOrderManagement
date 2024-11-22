@@ -19,26 +19,22 @@
         <div class="container">
             <div class="heading_container heading_center">
                 <h2>
-                    Our Menu
+                    Menümüz
                 </h2>
             </div>
 
             <ul class="filters_menu">
-                <li class="active" data-filter="*">Tüm Ürünler</li>
-                <li data-filter=".burger">Hamburger</li>
-                <li data-filter=".pizza">Pizza</li>
-                <li data-filter=".pasta">Makarna</li>
-                <li data-filter=".fries">Kızartmalar</li>
-                <li data-filter=".fries">Salatalar</li>
-                <li data-filter=".fries">İçecekler</li>
-                <li data-filter=".fries">Tatlılar</li>
+                @foreach (var category in Model)
+                {
+                    <li  data-filter="@category.CategoryName">@category.CategoryName</li>
+                }
             </ul>
 
             <div class="filters-content">
                 <div class="row grid">
                     @foreach (var item in Model)
                     {
-                        <div class="col-sm-6 col-lg-4 all pizza">
+                        <div class="col-sm-6 col-lg-4 all @item.CategoryName">
                             <div class="box">
                                 <div>
                                     <div class="img-box">
@@ -55,7 +51,7 @@
                                             <h6>
                                                 @item.Price₺
                                             </h6>
-                                            <a href="#" onclick="showproductıd(@item.ProductID)">
+                                            <a href="#" onclick="showproductıd(@item.ProductID, '@item.ProductName')">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                                                 <g>
                                                 <g>
@@ -130,19 +126,21 @@
     @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
     <!-- footer section -->
     <!-- jQery -->
-    @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
+    @await Component.InvokeAsync("_UILayoutScriptComponentPartial")    
     <script>
-        function showproductıd(value) {
-            var id = value
+        function showproductıd(productId, productName) {
             $.ajax({
-                type: 'post',                
-                data: { item: id },
-                url: "/Menu/AddBasket/" + id,
+                type: 'POST',
+                url: `/Menu/AddBasket/${productId}`,
                 contentType: 'json',
+                data: { item: productId },
                 success: function () {
-                    swal("Good job!"+ id, "Seçtiğiniz Ürün Sepete Eklendi", "success");
+                    swal("Eklendi!", `${productName} sepete eklendi.`, "success");
+                },
+                error: function () {
+                    swal("Hata!", "Ürün sepete eklenirken bir hata oluştu.", "error");
                 }
-            })
+            });
         }
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

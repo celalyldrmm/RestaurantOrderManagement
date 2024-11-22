@@ -108,6 +108,12 @@ namespace SignalRApi.Controllers
             _productService.TUpdate(value);
             return Ok("Ürün bilgisi başarıyla güncellendi!");
         }
+        [HttpGet("GetLast9Products")]
+        public IActionResult GetLast9Products()
+        {
+            var value = _productService.TGetLast9Products();
+            return Ok(value);
+        }
     }
 }
 
