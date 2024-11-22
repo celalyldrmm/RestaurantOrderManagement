@@ -23,12 +23,7 @@
                 </h2>
             </div>
 
-            <ul class="filters_menu">
-                @foreach (var category in Model)
-                {
-                    <li  data-filter="@category.CategoryName">@category.CategoryName</li>
-                }
-            </ul>
+            @await Component.InvokeAsync("_MenuCategoryFilterComponentPartial")
 
             <div class="filters-content">
                 <div class="row grid">
