@@ -12,10 +12,12 @@ namespace SignalRWebUI.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
+            ViewBag.v = id;
+            TempData["id"] = id;
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:5195/api/Basket/BasketListByMenuTableWithProductName?id=1");
+            var responseMessage = await client.GetAsync("http://localhost:5195/api/Basket/BasketListByMenuTableWithProductName?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -25,14 +27,19 @@ namespace SignalRWebUI.Controllers
             return View();
         }
         public async Task<IActionResult> DeleteBasket( int id)
-        {
+        {            
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.DeleteAsync($"http://localhost:5195/api/Basket/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index");
+                var refererUrl = Request.Headers["Referer"].ToString(); // Kullanıcının geldiği URL
+
+                if (!string.IsNullOrEmpty(refererUrl))
+                {
+                    return Redirect(refererUrl); // Aynı URL'ye geri dön
+                }
             }
-            return View();
+            return NoContent();
 
         }
         

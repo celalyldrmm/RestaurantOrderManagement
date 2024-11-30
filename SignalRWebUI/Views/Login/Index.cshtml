@@ -15,7 +15,8 @@
 <body>
     <div class="background">
         <div class="form-container">
-            <form class="form-detail" action="#" method="post">
+          
+            <form class="form-detail" action="/Login/Index" method="post">
                 <h2>Kullanıcı Girişi</h2>
                 <div class="form-row">
                     <input type="text" asp-for="Username" id="username" class="input-text" placeholder="Kullanıcı Adı" required>
@@ -27,7 +28,15 @@
                     <input type="submit" name="login" class="register" value="Giriş Yap">
                 </div>
             </form>
+
+           
+            <form class="form-detail" action="/Register/Index" method="get">
+                <div class="form-row-last">
+                    <input type="submit" name="register" class="register" value="Üye Ol">
+                </div>
+            </form>
         </div>
+
     </div>
 </body>
 </html>
