@@ -9,6 +9,7 @@
         public string ImageUrl { get; set; }
         public bool ProductStatus { get; set; }
         public string CategoryName { get; set; }
-      
+        public int MenuTableID { get; set; }
+
     }
 }

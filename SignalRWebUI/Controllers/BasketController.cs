@@ -36,7 +36,7 @@ namespace SignalRWebUI.Controllers
 
                 if (!string.IsNullOrEmpty(refererUrl))
                 {
-                    return Redirect(refererUrl); // Aynı URL'ye geri dön
+                    return Redirect(refererUrl);
                 }
             }
             return NoContent();
