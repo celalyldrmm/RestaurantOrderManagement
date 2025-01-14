@@ -79,3 +79,20 @@ Verimlilik Artışı: Restoran operasyonlarını hızlandırarak hem çalışanl
 Gelişmiş Müşteri Deneyimi: Kullanıcıların sipariş ve rezervasyon süreçlerini kolaylaştırarak daha memnun bir müşteri kitlesi oluşturur.
 
 Esneklik ve Ölçeklenebilirlik: Modern teknolojilerle desteklenen sistem, farklı restoran türlerine kolayca uyarlanabilir.
+
+Projenin Görüntüleri;
+
+
+https://github.com/user-attachments/assets/2d8711aa-532a-41a9-a5fb-1e2ce06406fe
+
+
+https://github.com/user-attachments/assets/438178b2-7f48-48bd-ad00-5a28386f20eb
+
+
+https://github.com/user-attachments/assets/b8f222fa-fbc4-4110-8a58-09143fb8a00a
+
+
+https://github.com/user-attachments/assets/76b5668f-800e-4d07-b8d2-263c9ea43c9d
+
+
+https://github.com/user-attachments/assets/d677d00f-f9f1-45f5-a3db-1796b0b15890
